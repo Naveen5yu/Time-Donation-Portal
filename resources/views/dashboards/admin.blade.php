@@ -12,7 +12,6 @@
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: #fff;
         }
-
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -24,7 +23,6 @@
             padding-top: 40px;
             box-shadow: 2px 0 15px rgba(0, 0, 0, 0.5);
         }
-
         .sidebar h2 {
             text-align: center;
             margin-bottom: 30px;
@@ -32,7 +30,6 @@
             letter-spacing: 2px;
             color: #00e6e6;
         }
-
         .sidebar a {
             display: block;
             padding: 12px 20px;
@@ -42,24 +39,20 @@
             border-radius: 8px;
             transition: all 0.3s ease-in-out;
         }
-
         .sidebar a:hover {
             background: #00e6e6;
             color: #000;
             transform: translateX(8px);
         }
-
         .content {
             margin-left: 250px;
             padding: 30px;
         }
-
         .content h1 {
             font-size: 2.2rem;
             margin-bottom: 20px;
             color: #00e6e6;
         }
-
         .card {
             background: rgba(255, 255, 255, 0.08);
             padding: 20px;
@@ -67,7 +60,6 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-
         .logout-btn {
             display: inline-block;
             padding: 12px 20px;
@@ -79,7 +71,6 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         .logout-btn:hover {
             background: #cc0000;
         }
@@ -88,9 +79,8 @@
 <body>
     <div class="sidebar">
         <h2>⚡ Admin Panel</h2>
-        <a href="#">👥 User Management</a>
-        <a href="#">⏳ Time Slot Management</a>
-        <a href="#">📊 Reports</a>
+        <a href="{{ route('admin.users.index') }}">👥 User Management</a>
+        <a href="{{ route('admin.reports.index') }}">📊 Reports</a>
     </div>
 
     <div class="content">
@@ -98,9 +88,8 @@
 
         <div class="card">
             <h2>📌 Quick Stats</h2>
-            <p>Users Registered: 120</p>
-            <p>Active Time Slots: 35</p>
-            <p>Reports Generated: 12</p>
+            <p>Users Registered: {{ $userCount }}</p>
+            <p>Reports Generated: {{ $reportCount }}</p>
         </div>
 
         <form method="POST" action="{{ route('logout') }}">

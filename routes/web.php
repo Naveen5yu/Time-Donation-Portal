@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TimeRequestController;
 use App\Http\Controllers\Donor\DonorController as DonorDashboardController;
 use App\Http\Controllers\Seeker\SeekerController as SeekerDashboardController;
+use App\Http\Controllers\Admin\AdminController;
 
 // Auth
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
@@ -12,9 +13,6 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Dashboards
-Route::get('/admin/dashboard', fn() => view('dashboards.admin'))->name('admin.dashboard');
 
 // Seeker routes
 Route::prefix('seeker')->middleware('auth')->group(function () {
@@ -35,7 +33,34 @@ Route::prefix('donor')->middleware('auth')->group(function () {
     Route::get('/chat', [DonorDashboardController::class, 'chat'])->name('donor.chat');
 });
 
-
+// Default welcome page
 Route::get('/', function () {
-    return view('welcome');  // This points to resources/views/welcome.blade.php
+    return view('welcome');
 })->name('welcome');
+
+// Admin routes
+Route::prefix('admin')->middleware('auth')->group(function() {
+
+    // Dashboard
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // User Management CRUD
+    Route::get('/users', [AdminController::class, 'usersIndex'])->name('admin.users.index');
+    Route::get('/users/create', [AdminController::class, 'usersCreate'])->name('admin.users.create');
+    Route::post('/users', [AdminController::class, 'usersStore'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [AdminController::class, 'usersEdit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminController::class, 'usersUpdate'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminController::class, 'usersDelete'])->name('admin.users.delete');
+
+
+    
+
+// Reports
+    Route::get('/reports', [AdminController::class, 'reportsIndex'])->name('admin.reports.index');
+    Route::get('/reports/{id}', [AdminController::class, 'reportsShow'])->name('admin.reports.show');
+
+
+
+    Route::get('/reports/exportPDF', [AdminController::class, 'reportsExportPDF'])->name('admin.reports.exportPDF');
+
+});

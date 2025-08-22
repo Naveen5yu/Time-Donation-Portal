@@ -96,7 +96,6 @@
 
             <label for="role">Select Role:</label>
             <select name="role" id="role" required>
-                <option value="admin">Admin</option>
                 <option value="donor">Donor</option>
                 <option value="seeker">Seeker</option>
             </select>
