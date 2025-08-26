@@ -7,6 +7,8 @@ use App\Http\Controllers\Donor\DonorController as DonorDashboardController;
 use App\Http\Controllers\Seeker\SeekerController as SeekerDashboardController;
 use App\Http\Controllers\Admin\AdminController;
 
+
+
 // Auth
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -63,4 +65,13 @@ Route::prefix('admin')->middleware('auth')->group(function() {
 
     Route::get('/reports/exportPDF', [AdminController::class, 'reportsExportPDF'])->name('admin.reports.exportPDF');
 
+
+
+    Route::get('/welcome', function () {
+    return view('welcome');
 });
+
+});
+
+
+

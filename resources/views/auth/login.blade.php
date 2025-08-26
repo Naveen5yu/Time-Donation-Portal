@@ -1,109 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Time Donation Portal</title>
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Time Donation Portal</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #dce3eb;
+      font-family: Arial, sans-serif;
+    }
 
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: white;
-        }
+    .login-container {
+      background: #e0e5ec;
+      padding: 40px;
+      border-radius: 20px;
+      width: 350px;
+      max-width: 90%;
+      text-align: center;
+      box-shadow: 7px 7px 15px #a3b1c6,
+                  -7px -7px 15px #ffffff;
+    }
 
-        .login-container {
-            background: rgba(0, 0, 0, 0.75);
-            padding: 40px;
-            border-radius: 15px;
-            width: 350px;
-            text-align: center;
-            box-shadow: 0px 0px 25px rgba(0, 255, 255, 0.6);
-            animation: glow 2s infinite alternate;
-        }
+    h1 {
+      margin-bottom: 5px;
+      font-size: 1.4rem;
+      color: #444;
+    }
 
-        @keyframes glow {
-            from { box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.3); }
-            to { box-shadow: 0px 0px 30px rgba(0, 255, 255, 0.9); }
-        }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
 
-        h2 {
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: cyan;
-            text-shadow: 0 0 15px cyan;
-        }
+    input {
+      width: 100%;
+      padding: 15px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 30px;
+      background: #e0e5ec;
+      box-shadow: inset 6px 6px 8px #a3b1c6,
+                  inset -6px -6px 8px #ffffff;
+      font-size: 1rem;
+      color: #333;
+      outline: none;
+      transition: 0.3s;
+    }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: none;
-            outline: none;
-            background: #111;
-            color: white;
-            font-size: 16px;
-            transition: 0.3s;
-        }
+    input::placeholder {
+      color: #555;
+    }
 
-        input:focus {
-            background: #222;
-            box-shadow: 0px 0px 10px cyan;
-        }
+    input:focus {
+      box-shadow: inset 4px 4px 6px #a3b1c6,
+                  inset -4px -4px 6px #ffffff,
+                  0 0 6px rgba(59,130,246,0.4);
+    }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background: cyan;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 6px 6px 12px #a3b1c6,
+                  -6px -6px 12px #ffffff;
+      transition: 0.3s;
+    }
 
-        button:hover {
-            background: #00bcd4;
-            box-shadow: 0px 0px 15px cyan;
-        }
+    button:hover {
+      transform: scale(1.05);
+    }
 
-        a {
-            display: inline-block;
-            margin-top: 15px;
-            color: cyan;
-            text-decoration: none;
-            transition: 0.3s;
-        }
+    .login-btn {
+      background: linear-gradient(135deg, #6ee7b7, #3b82f6);
+      color: white;
+    }
 
-        a:hover {
-            color: white;
-            text-shadow: 0 0 8px cyan;
-        }
-    </style>
+   
+
+    a {
+      display: block;
+      margin-top: 15px;
+      color: #555;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #3b82f6;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>🔐 Login</h2>
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <a href="{{ route('register') }}">Create Account</a>
-    </div>
+  <div class="login-container">
+    <h1>⏳ Time Donation Portal</h1>
+    <h2>Login</h2>
+
+    <form method="POST" action="{{ route('login') }}">
+      @csrf
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" class="login-btn">LOGIN</button>
+    </form>
+
+    <a href="{{ route('register') }}">Create Account</a>
+    <a href="{{ url('/') }}">Back to Landing Page</a>
+  </div>
 </body>
 </html>

@@ -1,109 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donor Dashboard</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #00bcd4, #4caf50);
-            color: #fff;
-            text-align: center;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donor Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #dce3eb;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
 
-        header {
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-        }
+    .dark-mode {
+      background: #1e1e1e;
+      color: #e0e0e0;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 2.2em;
-        }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 25px;
+      background: #e0e5ec;
+      box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    }
 
-        .dashboard {
-            margin: 50px auto;
-            max-width: 900px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-        }
+    .dark-mode .navbar {
+      background: #2c2c2c;
+      box-shadow: 6px 6px 12px #111, -6px -6px 12px #333;
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 25px;
-            width: 260px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-            transition: transform 0.3s, background 0.3s;
-        }
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-        .card:hover {
-            transform: scale(1.08);
-            background: rgba(255, 255, 255, 0.25);
-        }
+    .navbar-left h2 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
 
-        .card a {
-            color: #fff;
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: none;
-            display: block;
-            margin-top: 10px;
-        }
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        form {
-            margin-top: 40px;
-        }
+    .toggle-btn, .logout-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-        button {
-            padding: 12px 25px;
-            background: #ff3d00;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+    .toggle-btn {
+      background: linear-gradient(135deg, #6ee7b7, #3b82f6);
+      color: white;
+    }
 
-        button:hover {
-            background: #d32f2f;
-        }
-    </style>
+    .toggle-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #f87171, #ef4444);
+      color: white;
+    }
+
+    .logout-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .header {
+      text-align: center;
+      margin: 40px 0 20px 0;
+      color: #0ecfafff;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .header h3 {
+      margin: 5px 0 0 0;
+      font-size: 1.3rem;
+      color: #555;
+    }
+
+    .dashboard {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding-bottom: 40px;
+    }
+
+    .card {
+      width: 250px;
+      height: 180px;
+      background: #e0e5ec;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 7px 7px 15px #a3b1c6, -7px -7px 15px #ffffff;
+      transition: transform 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .dark-mode .card {
+      background: #2c2c2c;
+      box-shadow: 7px 7px 15px #111, -7px -7px 15px #333;
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1>🚀 Donor Dashboard</h1>
-        <p>Welcome, Super Donor! Manage your contributions and connect with seekers 💙</p>
-    </header>
-
-    <section class="dashboard">
-        <div class="card">
-            <h2>📦 My Donations</h2>
-            <a href="{{ route('donor.my_donations') }}">View Donations</a>
-        </div>
-
-        <div class="card">
-            <h2>🤝 Seeker Requests</h2>
-            <a href="{{ route('donor.seeker_requests') }}">View Requests</a>
-        </div>
-
-        <div class="card">
-            <h2>💬 Chat with Seekers</h2>
-            <a href="{{ route('donor.chat') }}">Start Chat</a>
-        </div>
-    </section>
-
-    <form method="POST" action="{{ route('logout') }}">
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="navbar-left">
+      <h2>Welcome, {{ Auth::user()->name }}</h2>
+    </div>
+    <div class="navbar-right">
+      <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+      <form action="{{ route('logout') }}" method="POST">
         @csrf
-        <button type="submit">🚪 Logout</button>
-    </form>
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </div>
 
+  <!-- Page Header -->
+  <div class="header">
+    <h1>Donor Dashboard</h1>
+    <h3>Time Donation Portal</h3>
+  </div>
+
+  <!-- Dashboard Cards -->
+  <div class="dashboard">
+    <a href="{{ route('donor.my_donations') }}" class="card">My Donations</a>
+    <a href="{{ route('donor.seeker_requests') }}" class="card">Seeker Requests</a>
+    <a href="{{ route('donor.chat') }}" class="card">Chat</a>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
 </body>
 </html>
