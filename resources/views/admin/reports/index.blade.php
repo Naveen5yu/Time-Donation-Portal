@@ -4,219 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Reports - Time Donation Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
             min-height: 100vh;
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(145deg, #3b0000, green, white, orange);
-            background-size: 400% 400%;
-            color: #fff8e1;
+            background-color: #e6f0fa;
+            color: #333;
             overflow-y: auto;
             overflow-x: hidden;
-            animation: bg-flow 12s ease infinite;
-            perspective: 1000px;
-        }
-
-        @keyframes bg-flow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255, 77, 77, 0.1), rgba(255, 204, 0, 0.1));
-            backdrop-filter: blur(6px);
-            z-index: -1;
-            animation: glass-shift 8s ease infinite;
-        }
-
-        @keyframes glass-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            max-width: 95%;
-            margin: 20px auto;
+            background: #e0e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            width: 95%;
+            max-width: 900px; /* Adjusted for better table visibility */
+            text-align: center;
+            box-shadow: 5px 5px 15px #d3dee9, -5px -5px 15px #ffffff; /* Neumorphic shadow */
         }
 
         .form-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 204, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
-            transform-style: preserve-3d;
-            transition: transform 0.7s ease, box-shadow 0.7s ease;
-            animation: subtle-shake 4s infinite ease-in-out;
+            margin-bottom: 20px;
         }
 
-        /* Subtle shake animation */
-        @keyframes subtle-shake {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(1px, -1px) rotate(-0.3deg); }
-            50% { transform: translate(-1px, 1px) rotate(0.3deg); }
-            75% { transform: translate(1px, 1px) rotate(-0.3deg); }
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.5), rgba(255, 77, 77, 0.5));
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            animation: logo-rotate 8s infinite linear, subtle-shake 5s infinite ease-in-out;
-            transform-style: preserve-3d;
-        }
-
-        .logo::before {
-            content: 'TDP';
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff8e1;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
-        }
-
-        @keyframes logo-rotate {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
+        .form-section h1 {
             font-size: 1.8rem;
-            color: #111111ff;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
-            animation: text-glow 4s infinite ease-in-out;
-            text-align: center;
-            margin: 0 0 15px;
-        }
-
-        @keyframes text-glow {
-            0% { text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.6); }
-            50% { text-shadow: 0 0 25px #ff4d4d, 0 0 40px rgba(255, 77, 77, 0.7); }
-            100% { text-shadow: 0 0 10px #ffcc00, 0 0 20px rgba(255, 204, 0, 0.6); }
+            color: #2c3e50;
+            margin: 0 0 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         a {
             display: block;
             margin: 10px auto;
             padding: 10px;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-size: 0.9rem;
             font-weight: bold;
-            color: #10100fff;
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.4), rgba(255, 77, 77, 0.4));
-            border: 1px solid rgba(255, 204, 0, 0.3);
-            border-radius: 8px;
+            color: white;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 20px;
             text-decoration: none;
             text-align: center;
-            transition: all 0.5s ease;
+            box-shadow: 5px 5px 15px #d3dee9, -5px -5px 15px #ffffff; /* Neumorphic shadow */
+            transition: box-shadow 0.3s, transform 0.3s;
+            width: 48%; /* Adjusted for two buttons side by side */
+            max-width: 200px;
         }
 
         a:hover {
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.6), rgba(255, 77, 77, 0.6));
-            color: #ffcc00;
-            box-shadow: 0 0 12px rgba(255, 77, 77, 0.6);
+            box-shadow: 3px 3px 10px #d3dee9, -3px -3px 10px #ffffff;
+            transform: translateY(-2px);
+            background: linear-gradient(to right, #00b5e6, #0066cc);
         }
 
-        /* Table styling */
+        .button-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         table {
             width: 100%;
+            min-width: 600px; /* Minimum width to ensure all columns fit */
             border-collapse: collapse;
-            margin-top: 20px;
-            border: 2px solid rgba(255, 204, 0, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: #f0f4f8;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 5px 5px 15px #d3dee9, -5px -5px 15px #ffffff; /* Neumorphic shadow */
         }
 
         th, td {
             padding: 12px 15px;
-            border: 1px solid rgba(255, 204, 0, 0.3);
             text-align: center;
-            color: #0f0f0eff;
+            color: #2c3e50;
+            white-space: nowrap;
+            background: linear-gradient(145deg, #e0e8f0, #ffffff);
+            box-shadow: inset 2px 2px 5px #d3dee9, inset -2px -2px 5px #ffffff; /* Inner neumorphic effect */
         }
 
         th {
-            background: linear-gradient(90deg, rgba(255, 77, 77, 0.4), rgba(255, 204, 0, 0.4));
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
+            color: #34495e;
+            font-weight: bold;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
         }
 
-        td {
-            background: rgba(255, 255, 255, 0.05);
+        tr {
+            border-bottom: 1px solid #e0e8f0;
+            transition: transform 0.3s;
         }
 
-        /* No data message */
+        tr:hover {
+            transform: translateZ(5px);
+            box-shadow: 3px 3px 10px #d3dee9, -3px -3px 10px #ffffff;
+        }
+
         .no-data {
             margin-top: 20px;
             text-align: center;
             font-style: italic;
-            color: #131212ff;
+            color: #34495e;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-section">
-            <div class="logo"></div>
             <h1>Admin Reports</h1>
-            <a href="{{ route('admin.reports.exportPDF') }}" target="_blank" class="export-btn">Export as PDF</a>
-            <a href="{{ route('admin.dashboard') }}" class="export-btn">Go to Dashboard</a>
+            <div class="button-bar">
+                <a href="{{ route('admin.reports.exportPDF') }}" target="_blank">Export as PDF</a>
+                <a href="{{ route('admin.dashboard') }}">Go to Dashboard</a>
+            </div>
 
-            @if($reports->count() > 0)
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>User</th>
-                        <th>Created At</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($reports as $report)
-                    <tr>
-                        <td>{{ $report->id }}</td>
-                        <td>{{ $report->title }}</td>
-                        <td>{{ $report->user->name ?? 'N/A' }}</td>
-                        <td>{{ $report->created_at->format('d-m-Y H:i') }}</td>
-                        <td><a href="{{ route('admin.reports.show', $report->id) }}">Show</a></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            @else
-            <p class="no-data">No reports found.</p>
-            @endif
+            <div class="table-container">
+                @if($reports->count() > 0)
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>User</th>
+                            <th>Created At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($reports as $report)
+                        <tr>
+                            <td>{{ $report->id }}</td>
+                            <td>{{ $report->title }}</td>
+                            <td>{{ $report->user->name ?? 'N/A' }}</td>
+                            <td>{{ $report->created_at->format('d-m-Y H:i') }}</td>
+                            <td><a href="{{ route('admin.reports.show', $report->id) }}">Show</a></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                <p class="no-data">No reports found.</p>
+                @endif
+            </div>
         </div>
     </div>
 </body>

@@ -2,202 +2,363 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Seeker Dashboard - Time Donation Portal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seeker Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #ecf0f3;
+      --text: #34495e;
+      --shadow-dark: #a3b1c6;
+      --shadow-light: #ffffff;
+      --accent-blue: #007bff;
+      --accent-pink: #ff0080;
+      --accent-green: #28a745;
+      --card-gradient-blue: linear-gradient(135deg, #4facfe, #00f2fe);
+      --card-gradient-pink: linear-gradient(135deg, #f093fb, #f5576c);
+      --card-gradient-green: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      --card-text-light: #ffffff;
+      --navbar-gradient: linear-gradient(90deg, #ecf0f3, #e0e5ec);
+      --header-text-gradient: linear-gradient(90deg, #34495e, #5a6e81);
+      --logout-gradient: linear-gradient(135deg, #f5576c, #f093fb);
+    }
+
+    body.dark-mode {
+      --bg: #1e1e2a;
+      --text: #f3f3f3;
+      --shadow-dark: #151520;
+      --shadow-light: #2a2a3a;
+      --accent-blue: #60a5fa;
+      --accent-pink: #ff80a0;
+      --accent-green: #90ee90;
+      --card-gradient-blue: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      --card-gradient-pink: linear-gradient(135deg, #ee9ca7, #ffdde1);
+      --card-gradient-green: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      --card-text-light: #ffffff;
+      --navbar-gradient: linear-gradient(90deg, #1e1e2a, #2c2c3a);
+      --header-text-gradient: linear-gradient(90deg, #f3f3f3, #d3d3d3);
+      --logout-gradient: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    }
+
     body {
-      font-family: 'Roboto', sans-serif;
-      background: #dce3eb;
-      color: #333;
       margin: 0;
-      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      transition: background 0.4s, color 0.4s;
+      padding: 0 20px;
     }
 
-    body.dark {
-      background: #1e1e1e;
-      color: #f0f0f0;
-    }
-
-    .dashboard-container {
-      max-width: 1000px;
-      width: 90%;
-      padding: 40px;
-      background: #e0e5ec;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 10px 10px 20px #a3b1c6,
-                  -10px -10px 20px #ffffff;
-      transition: background 0.4s, box-shadow 0.4s;
-    }
-
-    body.dark .dashboard-container {
-      background: #2b2b2b;
-      box-shadow: 10px 10px 20px #111,
-                  -10px -10px 20px #333;
-    }
-
-    .top-bar {
+    .navbar {
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      padding: 15px 25px;
+      background: var(--navbar-gradient);
+      box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+      border-radius: 0 0 25px 25px;
+      margin-bottom: 40px;
+      max-width: 900px;
+      transition: all 0.5s ease-in-out;
     }
 
-    .welcome-text {
-      font-size: 1.2rem;
-      font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .navbar-left h2 {
+      margin: 0;
+      font-size: 1.3rem;
+      color: var(--text);
+      transition: color 0.5s ease-in-out;
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .toggle-btn {
-      background: #e0e5ec;
+      padding: 10px 20px;
       border: none;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      cursor: pointer;
-      font-size: 1.3rem;
-      box-shadow: 5px 5px 10px #a3b1c6,
-                  -5px -5px 10px #ffffff;
-      transition: 0.3s;
-    }
-
-    body.dark .toggle-btn {
-      background: #2b2b2b;
-      box-shadow: 5px 5px 10px #111,
-                  -5px -5px 10px #333;
-      color: #f0f0f0;
-    }
-
-    .logo {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 25px;
-      background: #e0e5ec;
-      box-shadow: inset 6px 6px 12px #a3b1c6,
-                  inset -6px -6px 12px #ffffff;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #444;
-      transition: background 0.4s, color 0.4s, box-shadow 0.4s;
-    }
-
-    body.dark .logo {
-      background: #2b2b2b;
-      color: #f0f0f0;
-      box-shadow: inset 6px 6px 12px #111,
-                  inset -6px -6px 12px #333;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 40px;
-      color: #333;
-      font-family: 'Orbitron', sans-serif;
-      transition: color 0.4s;
-    }
-
-    body.dark h1 {
-      color: #f0f0f0;
-    }
-
-    .modules {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-bottom: 40px;
-    }
-
-    .module-card {
-      background: #e0e5ec;
-      padding: 25px;
-      border-radius: 15px;
-      text-decoration: none;
-      color: #333;
+      border-radius: 30px;
       font-weight: bold;
-      font-size: 1.1rem;
-      text-transform: uppercase;
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toggle-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--card-gradient-blue);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 30px;
+      z-index: -1;
+    }
+
+    .toggle-btn:hover::before {
+      opacity: 1;
+    }
+    .toggle-btn:hover {
+      color: var(--card-text-light);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    .toggle-btn:active {
+      box-shadow: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
+      transform: scale(0.95);
+    }
+
+    body.dark-mode .toggle-btn::before {
+        background: var(--card-gradient-pink);
+    }
+
+    .header {
+      text-align: center;
+      margin: 0 0 40px 0;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-family: 'Orbitron', sans-serif;
+      background: var(--header-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.5s ease-in-out;
+    }
+
+    .header h3 {
+      margin: 10px 0 0 0;
+      font-size: 1.4rem;
+      color: var(--text);
+      transition: color 0.5s ease-in-out;
+    }
+
+    .dashboard {
+      width: 100%;
+      max-width: 900px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      box-shadow: 7px 7px 15px #a3b1c6,
-                  -7px -7px 15px #ffffff;
-      transition: all 0.3s ease, background 0.4s, color 0.4s;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding-bottom: 40px;
     }
 
-    .module-card:hover {
+    .card {
+      width: 250px;
+      height: 180px;
+      border-radius: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      text-decoration: none;
+      color: var(--card-text-light);
+      position: relative;
+      overflow: hidden;
+      background-size: 200% 200%;
+      animation: gradientShift 10s ease infinite alternate;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .card-my-requests {
+      background: var(--card-gradient-blue);
+      box-shadow: 12px 12px 24px rgba(79, 172, 254, 0.4), -12px -12px 24px var(--shadow-light);
+    }
+
+    .card-create-request {
+      background: var(--card-gradient-pink);
+      box-shadow: 12px 12px 24px rgba(240, 147, 251, 0.4), -12px -12px 24px var(--shadow-light);
+    }
+
+    .card-donors {
+      background: var(--card-gradient-green);
+      box-shadow: 12px 12px 24px rgba(161, 196, 253, 0.4), -12px -12px 24px var(--shadow-light);
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+    }
+
+    body.dark-mode .card-my-requests {
+        box-shadow: 12px 12px 24px rgba(26, 42, 108, 0.4), -12px -12px 24px var(--shadow-light);
+    }
+    body.dark-mode .card-create-request {
+        box-shadow: 12px 12px 24px rgba(238, 156, 167, 0.4), -12px -12px 24px var(--shadow-light);
+    }
+    body.dark-mode .card-donors {
+        box-shadow: 12px 12px 24px rgba(161, 196, 253, 0.4), -12px -12px 24px var(--shadow-light);
+    }
+
+    .chat-list {
+      width: 100%;
+      max-width: 900px;
+      padding: 20px;
+      background: var(--bg);
+      border-radius: 25px;
+      box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+      margin-bottom: 40px;
+    }
+
+    .chat-list h3 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .chat-item {
+      padding: 15px;
+      background: var(--card-gradient-green);
+      border-radius: 15px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: var(--card-text-light);
+      display: block;
+      box-shadow: 8px 8px 16px rgba(161, 196, 253, 0.4), -8px -8px 16px var(--shadow-light);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .chat-item:hover {
       transform: translateY(-5px);
-      box-shadow: inset 5px 5px 10px #a3b1c6,
-                  inset -5px -5px 10px #ffffff;
+      box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
     }
 
-    body.dark .module-card {
-      background: #2b2b2b;
-      color: #f0f0f0;
-      box-shadow: 7px 7px 15px #111,
-                  -7px -7px 15px #333;
+    .no-chats {
+      color: var(--text);
+      text-align: center;
+      padding: 20px;
+      font-size: 1.1rem;
+    }
+
+    .logout-form {
+      margin-top: 40px;
+      margin-bottom: 60px;
+      text-align: center;
     }
 
     .logout-btn {
-      background: linear-gradient(135deg, #6ee7b7, #3b82f6);
+      padding: 14px 30px;
       border: none;
-      padding: 15px 30px;
-      border-radius: 30px;
-      color: white;
-      font-size: 1.1rem;
+      border-radius: 35px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 6px 6px 12px #a3b1c6,
-                  -6px -6px 12px #ffffff;
+      background: var(--logout-gradient);
+      color: var(--card-text-light);
+      box-shadow: 8px 8px 16px rgba(245, 87, 108, 0.4), -8px -8px 16px var(--shadow-light);
+      transition: all 0.3s ease;
+      display: inline-block;
+      width: 200px;
+      font-size: 1.1rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
     }
 
     .logout-btn:hover {
-      transform: scale(1.05);
+      box-shadow: inset 7px 7px 14px rgba(245, 87, 108, 0.5), inset -7px -7px 14px var(--shadow-light);
+      transform: scale(0.97);
+      color: white;
+    }
+    .logout-btn:active {
+      box-shadow: inset 10px 10px 20px rgba(245, 87, 108, 0.6), inset -10px -10px 20px var(--shadow-light);
+      transform: scale(0.94);
     }
   </style>
 </head>
 <body>
-  <div class="dashboard-container">
-
-    <!-- Top bar with Welcome + Dark Mode Toggle -->
-    <div class="top-bar">
-      <div class="welcome-text">Welcome, {{ Auth::user()->name }}</div>
-      <button class="toggle-btn" id="themeToggle">🌙</button>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="navbar-left">
+      <h2>Welcome, {{ Auth::user()->name }}</h2>
     </div>
-
-    <div class="logo">TDP</div>
-    <h1>Seeker Dashboard</h1>
-
-    <div class="modules">
-      <a href="{{ route('seeker.time_requests.index') }}" class="module-card">My Time Requests</a>
-      <a href="{{ route('seeker.donors.index') }}" class="module-card">Donors Module</a>
-      <a href="{{ route('seeker.chat') }}" class="module-card">Chat with Donors</a>
+    <div class="navbar-right">
+      <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
     </div>
-
-    <form method="POST" action="{{ route('logout') }}">
-      @csrf
-      <button type="submit" class="logout-btn">Logout</button>
-    </form>
   </div>
 
+  <!-- Page Header -->
+  <div class="header">
+    <h1>Seeker Dashboard</h1>
+    <h3>TDP</h3>
+  </div>
+
+  <!-- Dashboard Cards -->
+  <div class="dashboard">
+    <a href="{{ route('seeker.time_requests.index') }}" class="card card-my-requests">My Requests</a>
+    <a href="{{ route('seeker.time_requests.create') }}" class="card card-create-request">Create Request</a>
+    <a href="{{ route('seeker.donors.index') }}" class="card card-donors">Donors List</a>
+  </div>
+
+  <!-- Chat List -->
+  <div class="chat-list">
+    <h3>Active Chats</h3>
+    @if ($requests->isEmpty() || $requests->whereNotNull('donor_id')->isEmpty())
+        <p class="no-chats">No active chats available.</p>
+    @else
+        @foreach ($requests->whereNotNull('donor_id') as $request)
+            <a href="{{ route('seeker.chat', ['timeRequest' => $request->id]) }}" class="chat-item">
+                Chat for {{ $request->title }}
+                @if ($request->messages->isNotEmpty())
+                    <small>(Last message: {{ $request->messages->first()->created_at->diffForHumans() }})</small>
+                @endif
+            </a>
+        @endforeach
+    @endif
+  </div>
+
+  <!-- Logout button -->
+  <form action="{{ route('logout') }}" method="POST" class="logout-form">
+    @csrf
+    <button type="submit" class="logout-btn">Logout</button>
+  </form>
+
   <script>
-    const toggleBtn = document.getElementById('themeToggle');
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      toggleBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-    });
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const toggleBtn = document.querySelector('.toggle-btn');
+      if (document.body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = '☀️ Toggle Dark Mode';
+      } else {
+        toggleBtn.textContent = '🌙 Toggle Dark Mode';
+      }
+    }
+
+    window.onload = function() {
+      const toggleBtn = document.querySelector('.toggle-btn');
+      if (document.body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = '☀️ Toggle Dark Mode';
+      } else {
+        toggleBtn.textContent = '🌙 Toggle Dark Mode';
+      }
+    };
   </script>
 </body>
 </html>

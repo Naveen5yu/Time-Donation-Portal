@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Seeker;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller; // Ensure this is the Laravel base Controller
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TimeRequest;
@@ -10,19 +10,27 @@ use App\Models\User;
 
 class SeekerController extends Controller
 {
-    public function dashboard()
+    public function __construct()
     {
-        return view('dashboards.seeker');
+        $this->middleware('auth'); // This should now work with the correct Controller
     }
 
-    // Module 1: My Time Requests
+    public function dashboard()
+    {
+        $requests = TimeRequest::where('user_id', Auth::id())
+            ->with(['donor', 'messages' => function($q) {
+                $q->orderBy('created_at', 'desc')->limit(1);
+            }])
+            ->get();
+        return view('dashboards.seeker', compact('requests'));
+    }
+
     public function timeRequests()
     {
         $requests = TimeRequest::where('user_id', Auth::id())->get();
         return view('seeker.time_requests.index', compact('requests'));
     }
 
-    // Module 2: Create Time Request
     public function createTimeRequest()
     {
         return view('seeker.time_requests.create');
@@ -32,22 +40,21 @@ class SeekerController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'requested_time' => 'required|date',
         ]);
 
         TimeRequest::create([
+            'user_id' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
             'requested_time' => $request->requested_time,
-            'user_id' => Auth::id(),
-            'status' => 'Pending',
+            'status' => 'pending',
         ]);
 
-        return redirect()->route('seeker.time_requests.index');
+        return redirect()->route('seeker.time_requests.index')->with('success', 'Request created successfully.');
     }
 
-    // Module 3: Donors list
     public function donorsList()
     {
         $donors = User::where('role', 'donor')->get();
@@ -56,13 +63,16 @@ class SeekerController extends Controller
 
     public function showDonor($id)
     {
-        $donor = User::findOrFail($id);
+        $donor = User::where('role', 'donor')->findOrFail($id);
         return view('seeker.donors.show', compact('donor'));
     }
 
-    // Module 4: Chat
-    public function chat()
+    public function chat($timeRequest)
     {
-        return view('seeker.chat');
+        $timeRequest = TimeRequest::findOrFail($timeRequest);
+        if ($timeRequest->user_id !== Auth::id()) {
+            return redirect()->route('seeker.dashboard')->with('error', 'Unauthorized access.');
+        }
+        return view('seeker.chat', compact('timeRequest'));
     }
 }

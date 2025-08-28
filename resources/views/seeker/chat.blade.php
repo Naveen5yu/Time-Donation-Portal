@@ -3,240 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chat with Donors - Time Donation Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Chat with Donor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+        :root {
+            --bg: #ecf0f3;
+            --text: #34495e;
+            --shadow-dark: #a3b1c6;
+            --shadow-light: #ffffff;
+            --accent-blue: #007bff;
+            --accent-pink: #ff0080;
+            --accent-green: #28a745;
+            --card-gradient-blue: linear-gradient(135deg, #4facfe, #00f2fe);
+            --card-gradient-pink: linear-gradient(135deg, #f093fb, #f5576c);
+            --card-gradient-green: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            --card-text-light: #ffffff;
+            --navbar-gradient: linear-gradient(90deg, #ecf0f3, #e0e5ec);
+            --header-text-gradient: linear-gradient(90deg, #34495e, #5a6e81);
+        }
+
+        body.dark-mode {
+            --bg: #1e1e2a;
+            --text: #f3f3f3;
+            --shadow-dark: #151520;
+            --shadow-light: #2a2a3a;
+            --accent-blue: #60a5fa;
+            --accent-pink: #ff80a0;
+            --accent-green: #90ee90;
+            --card-gradient-blue: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            --card-gradient-pink: linear-gradient(135deg, #ee9ca7, #ffdde1);
+            --card-gradient-green: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            --card-text-light: #ffffff;
+            --navbar-gradient: linear-gradient(90deg, #1e1e2a, #2c2c3a);
+            --header-text-gradient: linear-gradient(90deg, #f3f3f3, #d3d3d3);
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #3b0000, #817b78ff, #0a5c88ff, #104f0aff, #9400d3);
-            color: #fff8e1;
             margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
             display: flex;
-            height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
-        .sidebar {
-            width: 25%;
-            background: rgba(255, 255, 255, 0.05);
+        header {
+            width: 100%;
             padding: 20px;
-            overflow-y: auto;
-            border-right: 1px solid rgba(255, 204, 0, 0.3);
-            backdrop-filter: blur(10px);
-            position: relative;
+            background: var(--navbar-gradient);
+            text-align: center;
+            box-shadow: 5px 5px 10px var(--shadow-dark),
+                        -5px -5px 10px var(--shadow-light);
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 20px;
         }
 
-        .sidebar::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle, rgba(255, 69, 0, 0.1) 0%, transparent 70%);
-            z-index: -1;
-        }
-
-        .sidebar h2 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            border-bottom: 1px solid rgba(255, 204, 0, 0.3);
-            padding-bottom: 10px;
-            color: #0e0e0eff;
-            text-shadow: 0 0 5px #ff4500;
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
             font-family: 'Orbitron', sans-serif;
-        }
-
-        .donor {
-            padding: 10px;
-            margin: 5px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 204, 0, 0.3);
-        }
-
-        .donor:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(5px);
+            background: var(--header-text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
         }
 
         .chat-container {
-            flex: 1;
+            width: 90%;
+            max-width: 700px;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: 25px;
+            box-shadow: 15px 15px 30px var(--shadow-dark),
+                        -15px -15px 30px var(--shadow-light);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            box-shadow: inset 5px 5px 10px var(--shadow-dark),
+                        inset -5px -5px 10px var(--shadow-light);
             display: flex;
             flex-direction: column;
         }
 
-        .chat-header {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            font-weight: bold;
-            font-size: 1.1rem;
-            border-bottom: 1px solid rgba(255, 204, 0, 0.3);
-            backdrop-filter: blur(10px);
-            position: relative;
+        .chat-message {
+            max-width: 70%;
+            margin: 5px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            word-break: break-word;
+            font-size: 0.95rem;
         }
 
-        .chat-header .logo {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.6), rgba(255, 77, 77, 0.6), rgba(148, 0, 211, 0.6));
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
+        .chat-message.own {
+            background: #d1e7dd;
+            align-self: flex-end;
+        }
+
+        .chat-message.other {
+            background: #e2e3e5;
+            align-self: flex-start;
+        }
+
+        .chat-message small {
+            display: block;
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .chat-form {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-        }
-
-        .chat-header .logo::before {
-            content: 'TDP';
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff8e1;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 0 8px rgba(255, 204, 0, 0.7);
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .message {
-            margin: 10px 0;
-            padding: 10px 15px;
-            border-radius: 15px;
-            max-width: 60%;
-            backdrop-filter: blur(5px);
-        }
-
-        .sent {
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.5), rgba(255, 77, 77, 0.5));
-            margin-left: auto;
-            text-align: right;
-            border: 1px solid rgba(255, 204, 0, 0.3);
-        }
-
-        .received {
-            background: linear-gradient(90deg, rgba(23, 212, 58, 0.3), rgba(148, 0, 211, 0.3));
-            margin-right: auto;
-            border: 1px solid rgba(23, 212, 58, 0.5);
+            gap: 10px;
         }
 
         .chat-input {
-            display: flex;
-            border-top: 1px solid rgba(255, 204, 0, 0.3);
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .chat-input input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
+            border-radius: 15px;
             border: none;
-            border-radius: 20px;
             outline: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            backdrop-filter: blur(5px);
+            box-shadow: inset 3px 3px 7px var(--shadow-dark),
+                        inset -3px -3px 7px var(--shadow-light);
         }
 
-        .chat-input input:focus {
-            border: 1px solid rgba(255, 204, 0, 0.6);
-            box-shadow: 0 0 8px rgba(255, 77, 77, 0.6);
-        }
-
-        .chat-input button {
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.5), rgba(255, 77, 77, 0.5), rgba(148, 0, 211, 0.5));
+        .btn {
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text);
+            background: var(--bg);
             border: none;
-            padding: 10px 20px;
-            margin-left: 10px;
-            border-radius: 20px;
-            color: #1f1e1dff;
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 204, 0, 0.3);
+            box-shadow: 5px 5px 10px var(--shadow-dark),
+                        -5px -5px 10px var(--shadow-light);
+            transition: all 0.2s ease-in-out;
         }
 
-        .chat-input button:hover {
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.7), rgba(255, 77, 77, 0.7), rgba(148, 0, 211, 0.7));
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        .btn:hover {
+            box-shadow: inset 3px 3px 7px var(--shadow-dark),
+                        inset -3px -3px 7px var(--shadow-light);
+            color: var(--accent-blue);
         }
 
-        .back-link {
-            display: block;
-            text-align: center;
+        footer {
+            margin-top: auto;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-top: 1px solid rgba(255, 204, 0, 0.3);
-            color: #1f1e1dff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .back-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff8e1;
-            transform: translateY(-2px);
-            box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
-        }
-
-        /* Custom scrollbar */
-        body::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        body::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, rgba(255, 204, 0, 0.5), rgba(255, 77, 77, 0.5), rgba(148, 0, 211, 0.5));
-            border-radius: 4px;
-        }
-
-        body::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, rgba(255, 204, 0, 0.7), rgba(255, 77, 77, 0.7), rgba(148, 0, 211, 0.7));
+            font-size: 0.9rem;
+            color: var(--text);
+            background: var(--navbar-gradient);
+            width: 100%;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 5px -5px 10px var(--shadow-dark),
+                        -5px 5px 10px var(--shadow-light);
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar with Donors -->
-    <div class="sidebar">
-        <h2>Donors</h2>
-        <div class="donor">Donor 1</div>
-        <div class="donor">Donor 2</div>
-        <div class="donor">Donor 3</div>
-        <!-- You can loop through donors dynamically here -->
+  <header>
+    <h1>Chat with Donor</h1>
+  </header>
+
+  <div class="chat-container">
+    <div id="chat-box" data-fetch-url="{{ route('chat.fetch', $timeRequest->id) }}">
+      <!-- Messages will load here -->
     </div>
 
-    <!-- Chat Window -->
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="logo"></div>
-            Chat with Donor 1
-        </div>
-        <div class="chat-messages">
-            <div class="message received">Hello, how can I help you today?</div>
-            <div class="message sent">I need assistance with a project.</div>
-        </div>
-        <form class="chat-input">
-            <input type="text" placeholder="Type a message..." required>
-            <button type="submit">Send</button>
-        </form>
-        <a href="{{ route('seeker.dashboard') }}" class="back-link">Back to Dashboard</a>
-    </div>
+    <form id="chat-form" class="chat-form" action="{{ route('chat.send', $timeRequest->id) }}" method="POST">
+        @csrf
+        <input type="text" id="chat-input" name="message" class="chat-input" placeholder="Type your message...">
+        <button type="submit" class="btn">Send</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; {{ date('Y') }} Time Donation Portal. All rights reserved.
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const chatForm = document.getElementById("chat-form");
+        const chatInput = document.getElementById("chat-input");
+        const chatBox = document.getElementById("chat-box");
+
+        let lastMessageCount = 0;
+
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function appendMessage(data, isOwn = false) {
+            const div = document.createElement("div");
+            div.classList.add("chat-message", isOwn ? "own" : "other");
+            div.innerHTML = `<p>${data.message}</p><small>${data.time}</small>`;
+            chatBox.appendChild(div);
+            scrollToBottom();
+        }
+
+        chatForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            fetch(chatForm.action, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                chatInput.value = "";
+                appendMessage(data, true);
+            })
+            .catch(console.error);
+        });
+
+        setInterval(() => {
+            fetch(chatBox.dataset.fetchUrl)
+                .then(res => res.json())
+                .then(messages => {
+                    if (messages.length !== lastMessageCount) {
+                        messages.slice(lastMessageCount).forEach(msg => appendMessage(msg, msg.is_own));
+                        lastMessageCount = messages.length;
+                        scrollToBottom();
+                    }
+                });
+        }, 2000);
+
+        scrollToBottom();
+    });
+  </script>
 </body>
 </html>

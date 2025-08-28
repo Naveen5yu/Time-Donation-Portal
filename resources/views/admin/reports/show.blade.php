@@ -21,9 +21,9 @@
            0) THEME TOKENS (CSS VARIABLES)
            ============================== */
         :root {
-            --bg0: #050506;
-            --bg1: #120008;
-            --bg2: #2a0010;
+            --bg0: #e6f0fa; /* Adjusted to light blue for neuromorphic base */
+            --bg1: #d3dee9;
+            --bg2: #ffffff;
             --lava1: #ff3b00;
             --lava2: #ff7a00;
             --gold1: #ffd166;
@@ -31,18 +31,18 @@
             --aqua2: #00a8ff;
             --glass: rgba(255, 255, 255, 0.08);
             --glass-strong: rgba(255, 255, 255, 0.14);
-            --stroke-soft: rgba(255, 255, 255, 0.18);
-            --stroke-aqua: rgba(0, 234, 255, 0.55);
-            --stroke-lava: rgba(255, 80, 0, 0.5);
-            --text-main: #fff8ee;
-            --text-dim: #dfecff;
+            --stroke-soft: rgba(0, 0, 0, 0.1); /* Adjusted for neuromorphic contrast */
+            --stroke-aqua: rgba(0, 234, 255, 0.3);
+            --stroke-lava: rgba(255, 80, 0, 0.3);
+            --text-main: #2c3e50;
+            --text-dim: #34495e;
             --text-accent: #ffb088;
-            --shadow-neon-aqua: 0 0 22px rgba(0, 234, 255, 0.5);
-            --shadow-neon-lava: 0 0 24px rgba(255, 80, 0, 0.55);
+            --shadow-neon-aqua: 0 0 12px rgba(0, 234, 255, 0.2); /* Softened for neuromorphism */
+            --shadow-neon-lava: 0 0 14px rgba(255, 80, 0, 0.2);
             --radius-lg: 16px;
             --radius-md: 12px;
             --radius-sm: 8px;
-            --blur: 16px;
+            --blur: 10px; /* Reduced blur for neuromorphic clarity */
             --ring: 1px solid var(--stroke-soft);
             --ease-std: cubic-bezier(.22,.61,.36,1);
         }
@@ -57,12 +57,8 @@
             color: var(--text-main);
             font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
             line-height: 1.4;
-            background:
-                radial-gradient(1200px 600px at 20% -10%, rgba(255, 60, 0, 0.35), transparent 60%),
-                radial-gradient(800px 500px at 85% 10%, rgba(0, 234, 255, 0.2), transparent 60%),
-                linear-gradient(135deg, var(--bg0), var(--bg1) 40%, var(--bg2) 100%);
+            background: var(--bg0); /* Solid light blue background */
             overflow-x: hidden;
-            /* No layout-shifting transforms on root */
         }
 
         /* Scanline layer (tasteful) */
@@ -72,27 +68,27 @@
             inset: 0;
             background: repeating-linear-gradient(
                 to bottom,
-                rgba(255,255,255,0.02) 0px,
-                rgba(255,255,255,0.02) 1px,
+                rgba(0, 0, 0, 0.02) 0px,
+                rgba(0, 0, 0, 0.02) 1px,
                 transparent 2px,
                 transparent 3px
             );
             mix-blend-mode: soft-light;
-            opacity: .35;
+            opacity: .15;
             z-index: 1;
         }
 
-        /* Hologrid layer */
+        /* Hologrid layer (softened for neuromorphism) */
         .holo-grid {
             pointer-events: none;
             position: fixed;
             inset: -10% -10% -10% -10%;
             background:
-                radial-gradient(circle at 50% 50%, rgba(0,234,255,0.06) 0 25%, transparent 26% 100%),
-                conic-gradient(from 0deg at 50% 50%, rgba(0,234,255,.08), rgba(255,80,0,.08), rgba(0,234,255,.08));
+                radial-gradient(circle at 50% 50%, rgba(0,234,255,0.03) 0 25%, transparent 26% 100%),
+                conic-gradient(from 0deg at 50% 50%, rgba(0,234,255,.04), rgba(255,80,0,.04), rgba(0,234,255,.04));
             mask-image:
-                linear-gradient(to bottom, transparent, black 20% 80%, transparent 100%);
-            filter: blur(12px);
+                linear-gradient(to bottom, transparent, var(--bg0) 20% 80%, transparent 100%);
+            filter: blur(6px);
             z-index: 0;
             animation: gridSpin 40s linear infinite;
         }
@@ -135,10 +131,10 @@
             border-radius: 50%;
             background:
                 radial-gradient(circle at 30% 30%, #fff 2%, #9ffaff 6%, transparent 7%),
-                radial-gradient(circle at 70% 70%, rgba(0,234,255,.7), rgba(0,234,255,0) 60%),
-                linear-gradient(135deg, rgba(0,234,255,.35), rgba(255,80,0,.35));
+                radial-gradient(circle at 70% 70%, rgba(0,234,255,.3), rgba(0,234,255,0) 60%),
+                linear-gradient(135deg, rgba(0,234,255,.15), rgba(255,80,0,.15));
             border: 1px solid var(--stroke-aqua);
-            box-shadow: var(--shadow-neon-aqua), inset 0 0 18px rgba(0,234,255,.35);
+            box-shadow: var(--shadow-neon-aqua), inset 0 0 8px rgba(0,234,255,.15); /* Softened shadow */
             position: relative;
         }
         .orb::after {
@@ -151,8 +147,8 @@
             font-weight: 700;
             font-size: 12px;
             letter-spacing: 1.2px;
-            color: #e9fdff;
-            text-shadow: 0 0 8px rgba(0,234,255,.8);
+            color: var(--text-main);
+            text-shadow: 0 0 4px rgba(0,234,255,.3);
         }
 
         .brand-name {
@@ -165,14 +161,13 @@
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(18px, 2.4vw, 24px);
             letter-spacing: 1.5px;
-            color: var(--aqua1);
-            text-shadow: 0 0 12px rgba(0,234,255,.7), 0 0 24px rgba(0,168,255,.45);
+            color: var(--text-main);
+            text-shadow: 0 0 6px rgba(0,234,255,.2);
         }
         .brand-name .sub {
             margin-top: 2px;
             font-size: 12px;
             color: var(--text-dim);
-            opacity: .8;
         }
 
         .actions {
@@ -185,7 +180,7 @@
         .btn {
             appearance: none;
             border: 1px solid var(--stroke-aqua);
-            background: linear-gradient(180deg, rgba(0,234,255,.08), rgba(0,168,255,.06));
+            background: linear-gradient(180deg, rgba(0,234,255,.04), rgba(0,168,255,.02));
             color: var(--text-main);
             font-weight: 700;
             font-size: 13px;
@@ -193,7 +188,7 @@
             padding: 10px 14px;
             border-radius: var(--radius-sm);
             transition: transform .2s var(--ease-std), box-shadow .2s var(--ease-std), border-color .2s;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 0 0 0 rgba(0,234,255,.0);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 2px 2px 6px rgba(0,0,0,.1), -2px -2px 6px rgba(255,255,255,.2); /* Neuromorphic shadow */
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -203,17 +198,18 @@
         .btn svg { width: 16px; height: 16px; }
         .btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 0 18px rgba(0,234,255,.25);
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 1px 1px 4px rgba(0,0,0,.1), -1px -1px 4px rgba(255,255,255,.2);
         }
         .btn:active { transform: translateY(0); }
         .btn--lava {
             border-color: var(--stroke-lava);
-            background: linear-gradient(180deg, rgba(255,80,0,.10), rgba(255,80,0,.06));
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+            background: linear-gradient(180deg, rgba(255,80,0,.05), rgba(255,80,0,.02));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 2px 2px 6px rgba(0,0,0,.1), -2px -2px 6px rgba(255,255,255,.2);
         }
         .btn--ghost {
             border-color: var(--stroke-soft);
-            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+            background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 2px 2px 6px rgba(0,0,0,.1), -2px -2px 6px rgba(255,255,255,.2);
         }
 
         /* ===================================
@@ -227,14 +223,14 @@
             backdrop-filter: blur(var(--blur));
             -webkit-backdrop-filter: blur(var(--blur));
             box-shadow:
-                inset 0 0 0 1px rgba(255,255,255,.06),
-                0 10px 40px rgba(0,0,0,.45),
-                0 0 42px rgba(0,234,255,.06);
+                inset 0 0 0 1px rgba(255,255,255,.03),
+                5px 5px 15px rgba(0,0,0,.1),
+                -5px -5px 15px rgba(255,255,255,.2); /* Neuromorphic shadow */
             padding: clamp(16px, 3vw, 28px);
             overflow: hidden;
         }
 
-        /* Edge glows */
+        /* Edge glows (softened for neuromorphism) */
         .card::before,
         .card::after {
             content: "";
@@ -245,14 +241,15 @@
         }
         .card::before {
             background:
-                radial-gradient(600px 80px at 10% 0%, rgba(0,234,255,.18), transparent 60%),
-                radial-gradient(600px 80px at 90% 0%, rgba(255,80,0,.18), transparent 60%);
-            mask-image: linear-gradient(to bottom, black, transparent 60%);
+                radial-gradient(600px 80px at 10% 0%, rgba(0,234,255,.08), transparent 60%),
+                radial-gradient(600px 80px at 90% 0%, rgba(255,80,0,.08), transparent 60%);
+            mask-image: linear-gradient(to bottom, var(--bg0), transparent 60%);
+            opacity: 0.5;
         }
         .card::after {
-            border: 1px solid rgba(0,234,255,.12);
+            border: 1px solid rgba(0,234,255,.06);
             mix-blend-mode: screen;
-            opacity: .6;
+            opacity: .3;
         }
 
         /* Header inside card */
@@ -267,8 +264,8 @@
             margin: 0;
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(18px, 2.2vw, 26px);
-            color: var(--gold1);
-            text-shadow: 0 0 12px rgba(255,209,102,.45), 0 0 24px rgba(255,122,0,.25);
+            color: var(--text-main);
+            text-shadow: 0 0 6px rgba(0,234,255,.1);
             letter-spacing: 1.1px;
         }
 
@@ -285,15 +282,15 @@
             gap: 8px;
             padding: 8px 10px;
             border-radius: 999px;
-            border: 1px solid rgba(255,255,255,.18);
-            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+            border: 1px solid var(--stroke-soft);
+            background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
             font-size: 12px;
             color: var(--text-dim);
-            white-space: nowrap;
+            box-shadow: 2px 2px 6px rgba(0,0,0,.1), -2px -2px 6px rgba(255,255,255,.2);
         }
         .chip .dot {
             width: 7px; height: 7px; border-radius: 50%;
-            box-shadow: 0 0 10px currentColor;
+            box-shadow: 0 0 6px currentColor;
         }
         .chip--user .dot { color: var(--aqua1); background: var(--aqua1); }
         .chip--time .dot { color: var(--lava2); background: var(--lava2); }
@@ -302,11 +299,11 @@
             height: 2px;
             margin: 16px 0 18px;
             background:
-               linear-gradient(90deg, transparent, rgba(0,234,255,.45), transparent),
-               radial-gradient(8px 24px at 10% 50%, rgba(255,80,0,.6), transparent 60%),
-               radial-gradient(8px 24px at 90% 50%, rgba(255,209,102,.6), transparent 60%);
+               linear-gradient(90deg, transparent, rgba(0,234,255,.2), transparent),
+               radial-gradient(8px 24px at 10% 50%, rgba(255,80,0,.3), transparent 60%),
+               radial-gradient(8px 24px at 90% 50%, rgba(255,209,102,.3), transparent 60%);
             border-radius: 2px;
-            box-shadow: 0 0 18px rgba(0,234,255,.35);
+            box-shadow: 0 0 8px rgba(0,234,255,.15);
         }
 
         /* Content */
@@ -332,8 +329,9 @@
             align-items: center;
             padding: 10px 12px;
             border-radius: var(--radius-md);
-            border: 1px solid rgba(255,255,255,.14);
-            background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+            border: 1px solid var(--stroke-soft);
+            background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+            box-shadow: inset 2px 2px 6px rgba(0,0,0,.1), inset -2px -2px 6px rgba(255,255,255,.2);
         }
         .meta-key {
             color: var(--text-accent);
@@ -369,10 +367,10 @@
             bottom: 18px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background: rgba(0,0,0,.65);
-            color: #eaffff;
-            border: 1px solid rgba(0,234,255,.4);
-            box-shadow: 0 0 18px rgba(0,234,255,.25);
+            background: rgba(0,0,0,.2);
+            color: var(--text-main);
+            border: 1px solid var(--stroke-aqua);
+            box-shadow: 2px 2px 6px rgba(0,0,0,.1), -2px -2px 6px rgba(255,255,255,.2);
             padding: 10px 14px;
             border-radius: 10px;
             font-size: 13px;
@@ -420,7 +418,7 @@
     </style>
 </head>
 <body>
-    <!-- Ambient layers -->
+    <!-- Ambient layers (softened for neuromorphism) -->
     <div class="scanlines" aria-hidden="true"></div>
     <div class="holo-grid" aria-hidden="true"></div>
 
@@ -431,7 +429,7 @@
                 <div class="orb" aria-hidden="true"></div>
                 <div class="brand-name">
                     <h1>Admin Report Panel</h1>
-                    <div class="sub">Report Intelligence  Glass UI</div>
+                    <div class="sub">Report Intelligence Glass UI</div>
                 </div>
             </div>
 
@@ -445,7 +443,7 @@
                     Back
                 </a>
 
-                <!-- Export PDF (keep if you want quick export here too) -->
+                <!-- Export PDF -->
                 <a class="btn btn--lava" href="{{ route('admin.reports.exportPDF') }}" target="_blank" rel="noopener" title="Export all reports as PDF">
                     <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M6 20H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>

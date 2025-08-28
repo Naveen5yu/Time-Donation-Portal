@@ -154,7 +154,7 @@
 <body>
   <!-- Navbar -->
   <div class="navbar">
-    <h1>⏳ Time Donation</h1>
+    <h1>⏳ Time Donation Portal</h1>
     <div class="links">
       <a href="#stories">Stories</a>
       <a href="#faq">FAQ</a>

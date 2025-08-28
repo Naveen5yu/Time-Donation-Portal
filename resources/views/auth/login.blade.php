@@ -87,8 +87,6 @@
       color: white;
     }
 
-   
-
     a {
       display: block;
       margin-top: 15px;
@@ -100,6 +98,15 @@
     a:hover {
       color: #3b82f6;
     }
+
+    .error {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: block;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -107,10 +114,22 @@
     <h1>⏳ Time Donation Portal</h1>
     <h2>Login</h2>
 
+    @if (session('success'))
+      <span style="color: green; font-size: 0.9rem; display: block; margin-bottom: 10px;">
+        {{ session('success') }}
+      </span>
+    @endif
+
     <form method="POST" action="{{ route('login') }}">
       @csrf
-      <input type="email" name="email" placeholder="Email" required>
+      <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
+      @error('email')
+        <span class="error">{{ $message }}</span>
+      @enderror
       <input type="password" name="password" placeholder="Password" required>
+      @error('password')
+        <span class="error">{{ $message }}</span>
+      @enderror
       <button type="submit" class="login-btn">LOGIN</button>
     </form>
 

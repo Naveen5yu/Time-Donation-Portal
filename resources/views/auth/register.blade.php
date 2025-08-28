@@ -106,6 +106,15 @@
     a:hover {
       color: #3b82f6;
     }
+
+    .error {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: block;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -113,18 +122,39 @@
     <h1>⏳ Time Donation Portal</h1>
     <h2>Register</h2>
 
+    @if (session('success'))
+      <span style="color: green; font-size: 0.9rem; display: block; margin-bottom: 10px;">
+        {{ session('success') }}
+      </span>
+    @endif
+
     <form method="POST" action="{{ route('register') }}">
       @csrf
-      <input type="text" name="name" placeholder="Full Name" required>
-      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="text" name="name" placeholder="Full Name" required value="{{ old('name') }}">
+      @error('name')
+        <span class="error">{{ $message }}</span>
+      @enderror
+      <input type="email" name="email" placeholder="Email Address" required value="{{ old('email') }}">
+      @error('email')
+        <span class="error">{{ $message }}</span>
+      @enderror
       <input type="password" name="password" placeholder="Password" required>
+      @error('password')
+        <span class="error">{{ $message }}</span>
+      @enderror
       <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+      @error('password_confirmation')
+        <span class="error">{{ $message }}</span>
+      @enderror
 
       <label for="role">Select Role:</label>
       <select name="role" id="role" required>
-        <option value="donor">Donor</option>
-        <option value="seeker">Seeker</option>
+        <option value="donor" {{ old('role') == 'donor' ? 'selected' : '' }}>Donor</option>
+        <option value="seeker" {{ old('role') == 'seeker' ? 'selected' : '' }}>Seeker</option>
       </select>
+      @error('role')
+        <span class="error">{{ $message }}</span>
+      @enderror
 
       <button type="submit" class="register-btn">REGISTER</button>
     </form>

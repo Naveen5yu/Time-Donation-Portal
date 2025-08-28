@@ -6,18 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('time_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Seeker
-            $table->unsignedBigInteger('donor_id')->nullable(); // Donor assigned
-            $table->string('title'); // Purpose of request
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('donor_id')->nullable();
+            $table->string('title');
             $table->text('description')->nullable();
-            $table->dateTime('requested_time'); // Requested donation time
+            $table->dateTime('requested_time');
             $table->enum('status', ['pending','approved','rejected'])->default('pending');
             $table->timestamps();
 
@@ -26,9 +23,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('time_requests');
