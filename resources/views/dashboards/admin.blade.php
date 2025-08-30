@@ -381,7 +381,7 @@
     <div class="logo">TDP</div>
     <h2>Admin Control</h2>
     <a href="{{ route('admin.users.index') }}">User Management</a>
-    <a href="{{ route('admin.reports.index') }}">Reports</a>
+    
   </div>
 
   <div class="content">
@@ -389,7 +389,7 @@
     <div class="card">
       <h2>Quick Stats</h2>
       <p>Users Registered: {{ $userCount }}</p>
-      <p>Reports Generated: {{ $reportCount }}</p>
+      
     </div>
 
     <!-- Toggle Button -->

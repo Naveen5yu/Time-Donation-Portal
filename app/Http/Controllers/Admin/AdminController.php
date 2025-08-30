@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Report;
-use PDF; 
+
 
 class AdminController extends Controller
 {
@@ -16,9 +15,9 @@ class AdminController extends Controller
     public function dashboard()
     {
         $userCount = User::count();
-        $reportCount = Report::count(); // dynamic reports count
+         // dynamic reports count
 
-        return view('dashboards.admin', compact('userCount', 'reportCount'));
+        return view('dashboards.admin', compact('userCount'));
     }
 
     // =========================
@@ -87,40 +86,5 @@ class AdminController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }
 
-    // =========================
-    // Reports Module
-    // =========================
-    public function reportsIndex()
-    {
-        $reports = Report::all(); // Get all reports
-        return view('admin.reports.index', compact('reports'));
-    }
-
-    public function reportsShow($id)
-    {
-        $report = Report::findOrFail($id); // Get single report
-        return view('admin.reports.show', compact('report'));
-    }
-
-
-
-
-
-     // Export Excel
-    public function reportsExportExcel()
-    {
-        return Excel::download(new ReportsExport, 'reports.xlsx');
-    }
-
-    // Export PDF
-    public function reportsExportPDF()
-    {
-        $reports = Report::all();
-        $pdf = PDF::loadView('admin.reports.pdf', compact('reports'));
-        return $pdf->download('reports.pdf');
-    }
-
-
-   
-
+    
 }

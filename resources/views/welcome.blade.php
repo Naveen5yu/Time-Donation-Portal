@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Time Donation Portal</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Global Neumorphic Base */
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       background: #e0e5ec;
-      color: #333;
+      color: #222;
     }
 
     a {
@@ -50,33 +51,42 @@
     }
 
     .navbar .links a:hover {
-      box-shadow: inset 6px 6px 12px #a3b1c6,
-                  inset -6px -6px 12px #ffffff;
+      background: linear-gradient(135deg, #6ee7b7, #3b82f6);
+      color: #fff;
     }
 
     /* Hero */
     .hero {
-      text-align: center;
-      padding: 100px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      text-align: left;
+      padding: 80px 20px;
+    }
+
+    .hero-text {
+      max-width: 500px;
     }
 
     .hero h2 {
       font-size: 2.5rem;
       margin-bottom: 20px;
       font-weight: bold;
-      color: #333;
+      color: #222;
     }
 
     .hero p {
       font-size: 1.2rem;
       margin-bottom: 30px;
-      color: #555;
+      color: #444;
     }
 
     .hero .btn {
-      padding: 15px 30px;
+      padding: 18px 36px;
       border-radius: 30px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: bold;
       background: linear-gradient(135deg, #6ee7b7, #3b82f6);
       color: #fff;
@@ -85,10 +95,24 @@
       box-shadow: 6px 6px 12px #a3b1c6,
                   -6px -6px 12px #ffffff;
       transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
     }
 
     .hero .btn:hover {
-      transform: scale(1.05);
+      transform: scale(1.07);
+    }
+
+    .hero img {
+      max-width: 350px;
+      border-radius: 20px;
+      box-shadow: 7px 7px 15px #a3b1c6,
+                  -7px -7px 15px #ffffff;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     /* Section Cards */
@@ -134,7 +158,7 @@
 
     .card p {
       font-size: 0.95rem;
-      color: #555;
+      color: #444;
     }
 
     /* Footer */
@@ -143,11 +167,34 @@
       padding: 20px;
       text-align: center;
       font-size: 0.9rem;
-      color: #444;
+      color: #333;
       box-shadow: -6px -6px 12px #ffffff,
                   6px 6px 12px #a3b1c6;
       border-radius: 15px 15px 0 0;
       margin-top: 40px;
+    }
+
+    footer .footer-links {
+      margin: 10px 0;
+    }
+
+    footer .footer-links a {
+      margin: 0 10px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    footer .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Fixes */
+    @media(max-width:768px){
+      .hero { padding: 60px 15px; text-align: center; }
+      .hero-text { max-width: 100%; }
+      .hero h2 { font-size: 2rem; }
+      .navbar { padding: 15px 20px; }
+      .navbar h1 { font-size: 1.3rem; }
     }
   </style>
 </head>
@@ -165,9 +212,12 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <h2>Donate Your Time, Change a Life</h2>
-    <p>Our portal connects donors with seekers to exchange valuable hours of support and guidance.</p>
-    <a href="{{ route('register') }}"><button class="btn">Get Started</button></a>
+    <div class="hero-text">
+      <h2>Donate Your Time, Change a Life</h2>
+      <p>Our portal connects donors with seekers to exchange valuable hours of support and guidance.</p>
+      <a href="{{ route('register') }}"><button class="btn">Get Started</button></a>
+    </div>
+    <img src="{{ asset('images/WhatsApp Image 2025-08-30 at 03.00.25_cc7814a5.jpg') }}" alt="Hero Illustration">
   </section>
 
   <!-- Stories -->
@@ -210,6 +260,11 @@
 
   <!-- Footer -->
   <footer>
+    <div class="footer-links">
+      <a href="#">About</a> | 
+      <a href="#">Privacy Policy</a> | 
+      <a href="#">Contact</a>
+    </div>
     © 2025 Time Donation Portal • All Rights Reserved
   </footer>
 </body>

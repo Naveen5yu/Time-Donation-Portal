@@ -4,158 +4,242 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>My Time Requests - Time Donation Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* Global Neumorphic Base */
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #3b0000, #086888ff, #032f54ff, #143910ff, #9400d3);
-            color: #fff8e1;
             margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #e0e5ec;
+            color: #333;
+            transition: all 0.3s ease;
         }
 
+        body.dark-mode {
+            background: #2b2e3b;
+            color: #e0e5ec;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Stronger Neumorphic Header */
         header {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid rgba(255, 204, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, rgba(255, 204, 0, 0.6), rgba(255, 77, 77, 0.6), rgba(148, 0, 211, 0.6));
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            padding: 20px 50px;
+            background: #e0e5ec;
+            box-shadow: 12px 12px 24px #a3b1c6,
+                        -12px -12px 24px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: all 0.3s ease;
         }
 
-        .logo::before {
-            content: 'TDP';
-            font-family: 'Orbitron', sans-serif;
+        body.dark-mode header {
+            background: #2b2e3b;
+            box-shadow: 12px 12px 24px #1c1e26,
+                        -12px -12px 24px #3a3e4f;
+        }
+
+        header .logo {
             font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff8e1;
+            font-weight: 800;
+            color: #3b82f6;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+        }
+
+        body.dark-mode header .logo {
+            color: #6ee7b7;
         }
 
         header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #3b82f6;
             margin: 0;
-            font-size: 28px;
-            color: #0e0e0eff;
-            text-shadow: 0 0 8px #ff4500, 0 0 15px #9400d3;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
+        body.dark-mode header h1 {
+            color: #6ee7b7;
+        }
+
+        .header-links a, .toggle-btn {
+            margin-left: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #e0e5ec;
+            box-shadow: 6px 6px 12px #a3b1c6,
+                        -6px -6px 12px #ffffff;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            color: #333;
+        }
+
+        body.dark-mode .header-links a, body.dark-mode .toggle-btn {
+            background: #2b2e3b;
+            box-shadow: 6px 6px 12px #1c1e26,
+                        -6px -6px 12px #3a3e4f;
+            color: #e0e5ec;
+        }
+
+        .header-links a:hover, .toggle-btn:hover {
+            box-shadow: inset 6px 6px 12px #a3b1c6,
+                        inset -6px -6px 12px #ffffff;
+        }
+
+        body.dark-mode .header-links a:hover, body.dark-mode .toggle-btn:hover {
+            box-shadow: inset 6px 6px 12px #1c1e26,
+                        inset -6px -6px 12px #3a3e4f;
+        }
+
+        /* Container */
         .container {
             max-width: 900px;
             margin: 30px auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(255, 77, 77, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 204, 0, 0.3);
-            position: relative;
+            background: #e0e5ec;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #a3b1c6,
+                        -10px -10px 20px #ffffff;
+            transition: all 0.3s ease;
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            left: -30%;
-            width: 160%;
-            height: 160%;
-            background: radial-gradient(circle, rgba(255, 69, 0, 0.1) 0%, transparent 70%);
-            z-index: -1;
+        body.dark-mode .container {
+            background: #2b2e3b;
+            box-shadow: 10px 10px 20px #1c1e26,
+                        -10px -10px 20px #3a3e4f;
         }
 
+        /* Create New Request Button */
         .btn {
             display: inline-block;
             padding: 12px 20px;
             margin-bottom: 20px;
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.5), rgba(255, 77, 77, 0.5), rgba(148, 0, 211, 0.5));
-            color: #1f1e1dff;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #6ee7b7, #3b82f6);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 25px;
+            box-shadow: 6px 6px 12px #a3b1c6,
+                        -6px -6px 12px #ffffff;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 204, 0, 0.3);
+        }
+
+        body.dark-mode .btn {
+            box-shadow: 6px 6px 12px #1c1e26,
+                        -6px -6px 12px #3a3e4f;
         }
 
         .btn:hover {
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.7), rgba(255, 77, 77, 0.7), rgba(148, 0, 211, 0.7));
-            box-shadow: 0 0 12px rgba(255, 77, 77, 0.7);
-            transform: scale(1.05) rotate(-2deg);
+            box-shadow: inset 6px 6px 12px #a3b1c6,
+                        inset -6px -6px 12px #ffffff;
+            transform: scale(1.05);
         }
 
+        body.dark-mode .btn:hover {
+            box-shadow: inset 6px 6px 12px #1c1e26,
+                        inset -6px -6px 12px #3a3e4f;
+        }
+
+        /* Filter Dropdown */
+        .filter {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .filter select {
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #e0e5ec;
+            box-shadow: 6px 6px 12px #a3b1c6,
+                        -6px -6px 12px #ffffff;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .filter select {
+            background: #2b2e3b;
+            box-shadow: 6px 6px 12px #1c1e26,
+                        -6px -6px 12px #3a3e4f;
+            color: #e0e5ec;
+        }
+
+        .filter select:hover {
+            box-shadow: inset 6px 6px 12px #a3b1c6,
+                        inset -6px -6px 12px #ffffff;
+        }
+
+        body.dark-mode .filter select:hover {
+            box-shadow: inset 6px 6px 12px #1c1e26,
+                        inset -6px -6px 12px #3a3e4f;
+        }
+
+        /* Card */
         .card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(148, 0, 211, 0.05));
-            border-radius: 12px;
+            background: #e0e5ec;
+            border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+            box-shadow: 8px 8px 16px #a3b1c6,
+                        -8px -8px 16px #ffffff;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 204, 0, 0.3);
-            position: relative;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            left: -20%;
-            width: 140%;
-            height: 140%;
-            background: radial-gradient(circle, rgba(23, 212, 58, 0.1) 0%, transparent 70%);
-            z-index: -1;
-            transition: transform 0.3s ease;
+        body.dark-mode .card {
+            background: #2b2e3b;
+            box-shadow: 8px 8px 16px #1c1e26,
+                        -8px -8px 16px #3a3e4f;
         }
 
         .card:hover {
-            transform: translateY(-5px) rotate(1deg);
-            box-shadow: 0 0 15px rgba(255, 77, 77, 0.5);
+            box-shadow: inset 8px 8px 16px #a3b1c6,
+                        inset -8px -8px 16px #ffffff;
         }
 
-        .card:hover::before {
-            transform: translate(10%, 10%);
+        body.dark-mode .card:hover {
+            box-shadow: inset 8px 8px 16px #1c1e26,
+                        inset -8px -8px 16px #3a3e4f;
         }
 
         .card h3 {
             margin: 0 0 8px;
-            font-size: 20px;
-            color: #fff8e1;
-            text-shadow: 0 0 5px #ff4500;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #3b82f6;
+        }
+
+        body.dark-mode .card h3 {
+            color: #6ee7b7;
         }
 
         .status {
             display: inline-block;
             padding: 5px 12px;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.3), rgba(148, 0, 211, 0.3));
-            backdrop-filter: blur(5px);
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         .status.pending {
-            background: linear-gradient(90deg, #ffb74d, #9400d3);
-            color: #222;
+            background: linear-gradient(90deg, #ffb74d, #3b82f6);
+            color: #fff;
         }
 
         .status.approved {
-            background: linear-gradient(90deg, #4caf50, #15ff00ff);
+            background: linear-gradient(90deg, #4caf50, #6ee7b7);
             color: #fff;
         }
 
@@ -164,63 +248,88 @@
             color: #fff;
         }
 
+        /* Footer */
         footer {
             margin-top: 30px;
             text-align: center;
         }
 
         footer a {
-            color: #1f1e1dff;
-            text-decoration: none;
-            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #e0e5ec;
+            box-shadow: 6px 6px 12px #a3b1c6,
+                        -6px -6px 12px #ffffff;
+            font-weight: 600;
             transition: all 0.3s ease;
-            padding: 10px 15px;
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.4), rgba(255, 77, 77, 0.4));
-            border-radius: 6px;
-            backdrop-filter: blur(10px);
+        }
+
+        body.dark-mode footer a {
+            background: #2b2e3b;
+            box-shadow: 6px 6px 12px #1c1e26,
+                        -6px -6px 12px #3a3e4f;
         }
 
         footer a:hover {
-            color: #fff8e1;
-            background: linear-gradient(90deg, rgba(255, 204, 0, 0.6), rgba(255, 77, 77, 0.6));
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
-            transform: translateY(-2px);
+            box-shadow: inset 6px 6px 12px #a3b1c6,
+                        inset -6px -6px 12px #ffffff;
         }
 
-        /* Custom scrollbar */
+        body.dark-mode footer a:hover {
+            box-shadow: inset 6px 6px 12px #1c1e26,
+                        inset -6px -6px 12px #3a3e4f;
+        }
+
+        /* Custom Scrollbar */
         body::-webkit-scrollbar {
             width: 8px;
         }
 
         body::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: #e0e5ec;
             border-radius: 4px;
         }
 
+        body.dark-mode::-webkit-scrollbar-track {
+            background: #2b2e3b;
+        }
+
         body::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, rgba(255, 204, 0, 0.5), rgba(255, 77, 77, 0.5), rgba(148, 0, 211, 0.5));
+            background: linear-gradient(180deg, #6ee7b7, #3b82f6);
             border-radius: 4px;
         }
 
         body::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, rgba(255, 204, 0, 0.7), rgba(255, 77, 77, 0.7), rgba(148, 0, 211, 0.7));
+            background: linear-gradient(180deg, #3b82f6, #6ee7b7);
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"></div>
+        <div class="logo">TDP</div>
         <h1>My Time Requests</h1>
+        <div class="header-links">
+            <a href="{{ route('seeker.dashboard') }}">Back to Dashboard</a>
+            <button class="toggle-btn">Toggle Dark Mode</button>
+        </div>
     </header>
 
     <div class="container">
+        <div class="filter">
+            <select id="status-filter">
+                <option value="all">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">accepted</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
         <a href="{{ route('seeker.time_requests.create') }}" class="btn">Create New Request</a>
 
         @if($requests->isEmpty())
             <p>No time requests yet.</p>
         @else
             @foreach($requests as $req)
-                <div class="card">
+                <div class="card" data-status="{{ strtolower($req->status) }}">
                     <h3>{{ $req->title }}</h3>
                     <p>Status: 
                         <span class="status {{ strtolower($req->status) }}">
@@ -235,5 +344,32 @@
             <a href="{{ route('seeker.dashboard') }}">Back to Dashboard</a>
         </footer>
     </div>
+
+    <script>
+        // Dark Mode Toggle
+        const toggleBtn = document.querySelector('.toggle-btn');
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            toggleBtn.textContent = document.body.classList.contains('dark-mode') 
+                ? 'Toggle Light Mode' 
+                : 'Toggle Dark Mode';
+        });
+
+        // Filter Functionality
+        const filterSelect = document.querySelector('#status-filter');
+        const cards = document.querySelectorAll('.card');
+
+        filterSelect.addEventListener('change', () => {
+            const selectedStatus = filterSelect.value.toLowerCase(); // Normalize to lowercase
+            cards.forEach(card => {
+                const cardStatus = card.dataset.status.toLowerCase(); // Normalize card status
+                if (selectedStatus === 'all' || cardStatus === selectedStatus) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
